@@ -1,1163 +1,659 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang-key="pageTitle">Le Offerte del Club</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Righteous&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-lang-key="pageTitle">Le Offerte del Club</title>
 
-    <style>
-        :root {
-            --colore-oro: #ffd700;
-            --colore-rosso-neon: #ff3366;
-            --colore-sfondo: #0a0a10;
-            --colore-card: #14141d;
-            --colore-testo: #f0f0f0;
-            --colore-testo-scuro: #111;
-            
-            --ombra-neon-oro: 0 0 5px var(--colore-oro),
-                              0 0 10px var(--colore-oro),
-                              0 0 20px var(--colore-oro);
-            
-            --ombra-neon-rosso: 0 0 5px var(--colore-rosso-neon),
-                                  0 0 10px var(--colore-rosso-neon);
-            
-            font-size: 16px;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Righteous&display=swap" rel="stylesheet"/>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--colore-sfondo);
-            color: var(--colore-testo);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        body.modal-active {
-            overflow: hidden; /* Blocca scroll pagina quando modal è aperto */
-        }
+  <style>
+    :root{
+      --colore-oro:#ffd700;
+      --colore-rosso-neon:#ff3366;
+      --colore-sfondo:#0a0a10;
+      --colore-card:#14141d;
+      --colore-testo:#f0f0f0;
+      --colore-testo-scuro:#111;
+      --verde:#42d392;
+      --rosso:#ff5a5f;
+      --azzurro:#62aaff;
+      --grigio:#888;
 
-        /* 1. Navbar e Lingua */
-        .navbar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 1.875rem;
-            z-index: 100;
-        }
-        .logo {
-            font-family: 'Righteous', cursive;
-            font-size: 1.8rem;
-            color: var(--colore-oro);
-            text-decoration: none;
-            text-shadow: 0 0 5px var(--colore-oro);
-        }
-        .lang-switcher a {
-            color: var(--colore-testo);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin: 0 0.3125rem;
-            padding: 0.3125rem;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-        .lang-switcher a:hover { color: var(--colore-oro); }
-        .lang-switcher a.active {
-            color: var(--colore-oro);
-            border-bottom-color: var(--colore-oro);
-        }
+      --ombra-neon-oro:0 0 5px var(--colore-oro),0 0 10px var(--colore-oro),0 0 20px var(--colore-oro);
+      --ombra-neon-rosso:0 0 5px var(--colore-rosso-neon),0 0 10px var(--colore-rosso-neon);
 
-        /* 2. Sezione Hero */
-        .hero {
-            height: 100vh;
-            height: 100dvh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(225deg, #1d0024, #0f0f1a, #241e00, #0a0a10);
-            background-size: 400% 400%;
-            animation: gradientShift 20s ease infinite;
-            perspective: 1000px;
-            padding: 1rem;
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .hero-content {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            padding: 3rem 4rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-            transform-style: preserve-3d;
-            transform: rotateY(0) rotateX(0);
-            transition: transform 0.1s linear;
-        }
-        .hero h1 {
-            font-family: 'Righteous', cursive;
-            font-size: 4rem; 
-            color: var(--colore-oro);
-            text-shadow: var(--ombra-neon-oro);
-            margin-bottom: 1rem;
-            transform: translateZ(50px);
-        }
-        .hero-dynamic-text {
-            font-size: 1.5rem;
-            opacity: 0.9;
-            margin-bottom: 2.5rem;
-            transform: translateZ(30px);
-            height: 2.5rem;
-            color: #f0f0f0;
-        }
-        .cursor {
-            display: inline-block;
-            background-color: var(--colore-oro);
-            width: 3px;
-            margin-left: 5px;
-            animation: blink 1s infinite;
-            vertical-align: middle;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        .cta-button {
-            display: inline-block;
-            background: var(--colore-oro);
-            color: var(--colore-testo-scuro);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
-            transition: all 0.3s ease;
-            transform: translateZ(20px);
-        }
-        .cta-button:hover {
-            background: #fff;
-            color: var(--colore-sfondo);
-            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6);
-            transform: scale(1.05) translateY(-2px) translateZ(20px);
-        }
-        
-        /* 3. Sezione "Perché Noi" (Descrizione Prodotto) */
-        .why-us {
-            padding: 6rem 2rem 4rem 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .why-us-item {
-            display: grid;
-            grid-template-columns: 1fr 2.5fr;
-            gap: 2.5rem;
-            align-items: center;
-            margin-bottom: 4rem;
-            opacity: 0;
-            transform: translateX(-40px);
-        }
-        .why-us-item:nth-child(even) {
-            grid-template-columns: 2.5fr 1fr;
-            transform: translateX(40px);
-        }
-        .why-us-item:nth-child(even) .why-us-text { order: -1; }
-        .why-us-item.is-visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        .why-us-icon { text-align: center; }
-        .why-us-icon svg {
-            width: 80px;
-            height: 80px;
-            fill: var(--colore-oro);
-            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
-        }
-        .why-us-text h3 {
-            font-family: 'Righteous', cursive;
-            font-size: 2rem;
-            color: var(--colore-oro);
-            margin-bottom: 0.5rem;
-        }
-        .why-us-text p {
-            color: #ccc;
-            font-size: 1.1rem;
-        }
+      font-size:16px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Poppins',sans-serif;
+      background-color:var(--colore-sfondo);
+      color:var(--colore-testo);
+      line-height:1.6;
+      overflow-x:hidden;
+    }
 
-        /* 4. Sezione Offerte (ex "Bonus") */
-        .welcome-package {
-            padding: 5rem 2rem 6rem 2rem;
-            text-align: center;
-            background-color: #000;
-        }
-        .welcome-package h2 {
-            font-size: 2.8rem;
-            font-family: 'Righteous', cursive;
-            margin-bottom: 1rem;
-            color: var(--colore-testo);
-        }
-        .welcome-package > p {
-            font-size: 1.2rem;
-            margin-bottom: 3.5rem;
-            color: #ccc;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        /* Layout a 3 CARD */
-        .bonus-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+    /* Navbar */
+    .navbar{
+      position:absolute;top:0;left:0;width:100%;
+      display:flex;justify-content:space-between;align-items:center;
+      padding:1.25rem 1.875rem;z-index:100
+    }
+    .logo{
+      font-family:'Righteous',cursive;font-size:1.8rem;color:var(--colore-oro);
+      text-decoration:none;text-shadow:0 0 5px var(--colore-oro)
+    }
+    .lang-switcher a{
+      color:var(--colore-testo);text-decoration:none;font-weight:700;font-size:.9rem;
+      margin:0 .3125rem;padding:.3125rem;border-bottom:2px solid transparent;transition:.3s
+    }
+    .lang-switcher a:hover{color:var(--colore-oro)}
+    .lang-switcher a.active{color:var(--colore-oro);border-bottom-color:var(--colore-oro)}
 
-        .bonus-card {
-            background: var(--colore-card);
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 0;
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(40px);
-            text-align: left;
-            overflow: hidden;
-            text-decoration: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            cursor: pointer; /* Indica che è cliccabile */
-        }
-        
-        .bonus-card img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.4s ease, filter 0.4s ease;
-        }
-        .bonus-card .card-content { padding: 2rem; }
-        .bonus-card.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .bonus-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--colore-oro);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), var(--ombra-neon-oro);
-        }
-        .bonus-card:hover img {
-            transform: scale(1.05);
-            filter: brightness(1.1);
-        }
-        .bonus-card h3 {
-            font-family: 'Righteous', cursive;
-            font-size: 1.8rem;
-            color: var(--colore-rosso-neon);
-            text-shadow: var(--ombra-neon-rosso);
-            margin-bottom: 0.5rem;
-        }
-        .bonus-card p {
-            font-size: 1rem;
-            color: #ccc;
-        }
-        .bonus-card .offer-comment {
-            font-size: 0.85rem;
-            color: var(--colore-oro); 
-            margin-top: 15px;
-            font-style: italic;
-            opacity: 0.9;
-        }
+    /* Hero */
+    .hero{
+      height:100vh;display:flex;justify-content:center;align-items:center;text-align:center;position:relative;
+      background:linear-gradient(225deg,#1d0024,#0f0f1a,#241e00,#0a0a10);background-size:400% 400%;animation:gradientShift 20s ease infinite;
+      perspective:1000px;padding:1rem
+    }
+    @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .hero-content{
+      background:rgba(0,0,0,.2);border:1px solid rgba(255,215,0,.2);padding:3rem 4rem;border-radius:15px;
+      box-shadow:0 10px 40px rgba(0,0,0,.5);backdrop-filter:blur(5px);transform-style:preserve-3d;transform:rotateY(0) rotateX(0);transition:transform .1s linear
+    }
+    .hero h1{font-family:'Righteous',cursive;font-size:4rem;color:var(--colore-oro);text-shadow:var(--ombra-neon-oro);margin-bottom:1rem;transform:translateZ(50px)}
+    .hero-dynamic-text{font-size:1.5rem;opacity:.9;margin-bottom:2.5rem;transform:translateZ(30px);height:2.5rem;color:#f0f0f0}
+    .cursor{display:inline-block;background-color:var(--colore-oro);width:3px;margin-left:5px;animation:blink 1s infinite;vertical-align:middle}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+    .cta-button{
+      display:inline-block;background:var(--colore-oro);color:var(--colore-testo-scuro);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-weight:700;
+      font-size:1.2rem;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 20px rgba(255,215,0,.4);transition:.3s;transform:translateZ(20px)
+    }
+    .cta-button:hover{background:#fff;color:var(--colore-sfondo);box-shadow:0 6px 25px rgba(255,215,0,.6);transform:scale(1.05) translateY(-2px) translateZ(20px)}
 
-        /* 5. CTA Finale */
-        .final-cta {
-            text-align: center;
-            padding: 6rem 2rem;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1542628634-c4f4d2d3e0f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjAzNTV8MHwxfGFsbHx8fHx8fHx8fDE3MzAzODE4ODl8&ixlib=rb-4.0.3&q=80&w=1080');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-        .final-cta h2 {
-            font-size: 2.8rem;
-            font-family: 'Righteous', cursive;
-            margin-bottom: 1rem;
-            color: var(--colore-testo);
-        }
-        .final-cta p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: #f0f0f0;
-        }
+    /* Why us */
+    .why-us{padding:6rem 2rem 4rem;max-width:1100px;margin:0 auto}
+    .why-us-item{
+      display:grid;grid-template-columns:1fr 2.5fr;gap:2.5rem;align-items:center;margin-bottom:4rem;opacity:0;transform:translateX(-40px)
+    }
+    .why-us-item:nth-child(even){grid-template-columns:2.5fr 1fr;transform:translateX(40px)}
+    .why-us-item:nth-child(even) .why-us-text{order:-1}
+    .why-us-item.is-visible{opacity:1;transform:translateX(0)}
+    .why-us-icon{text-align:center}
+    .why-us-icon svg{width:80px;height:80px;fill:var(--colore-oro);filter:drop-shadow(0 0 5px rgba(255,215,0,.5))}
+    .why-us-text h3{font-family:'Righteous',cursive;font-size:2rem;color:var(--colore-oro);margin-bottom:.5rem}
+    .why-us-text p{color:#ccc;font-size:1.1rem}
 
-        /* 6. Footer */
-        .footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            font-size: 0.9rem;
-            color: #888;
-        }
-        
-        .animate-on-scroll {
-             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        /* ---------------------------------- */
-        /* --- MODAL ONBOARDING AUTOMATICO --- */
-        /* ---------------------------------- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(10, 10, 16, 0.9);
-            backdrop-filter: blur(10px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            animation: modalFadeIn 0.5s forwards;
-        }
-        @keyframes modalFadeIn { to { opacity: 1; } }
+    /* Sezione offerte */
+    .welcome-package{padding:5rem 2rem 6rem;text-align:center;background-color:#000}
+    .welcome-package h2{font-size:2.8rem;font-family:'Righteous',cursive;margin-bottom:1rem;color:var(--colore-testo)}
+    .welcome-package>p{font-size:1.2rem;margin-bottom:3.5rem;color:#ccc;max-width:800px;margin-left:auto;margin-right:auto}
 
-        .modal-content {
-            background: var(--colore-card);
-            border: 1px solid var(--colore-oro);
-            box-shadow: var(--ombra-neon-oro);
-            border-radius: 15px;
-            width: 90%;
-            max-width: 1000px;
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            padding: 3rem;
-            position: relative;
-            z-index: 2001;
-            transform: scale(0.9);
-            opacity: 0;
-            animation: modalZoomIn 0.5s 0.2s forwards;
-        }
-        @keyframes modalZoomIn { to { transform: scale(1); opacity: 1; } }
-        
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            background: none;
-            border: none;
-            color: var(--colore-testo);
-            font-size: 3rem;
-            font-family: Arial, sans-serif;
-            font-weight: 100;
-            cursor: pointer;
-            transition: color 0.3s ease, transform 0.3s ease;
-            text-shadow: 0 0 5px rgba(255,255,255,0.2);
-            z-index: 2005;
-        }
-        .modal-close:hover {
-            color: var(--colore-oro);
-            transform: rotate(90deg);
-            text-shadow: var(--ombra-neon-oro);
-        }
-        .modal-content h2 {
-            font-family: 'Righteous', cursive;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--colore-oro);
-            text-shadow: var(--ombra-neon-oro);
-        }
+    .bonus-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:2rem;max-width:1400px;margin:0 auto
+    }
 
-        /* Contenitore Slider Automatico */
-        .modal-stepper-container {
-            position: relative;
-            flex-grow: 1;
-            min-height: 400px;
-            overflow: hidden;
-        }
-        .onboarding-step {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            gap: 2.5rem;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateX(30px); /* Entra da destra */
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out, visibility 0.6s;
-        }
-        .onboarding-step.exit-left {
-            transform: translateX(-30px); /* Esce a sinistra */
-            opacity: 0;
-            visibility: hidden;
-        }
-        .onboarding-step.active {
-            transform: translateX(0);
-            opacity: 1;
-            visibility: visible;
-        }
-        .onboarding-step-image {
-            width: 100%;
-            border-radius: 10px;
-            object-fit: cover;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-            border: 1px solid var(--colore-oro);
-            max-height: 350px;
-        }
-        .onboarding-step-text h3 {
-            font-family: 'Righteous', cursive;
-            font-size: 2rem;
-            color: var(--colore-testo);
-            margin-bottom: 1rem;
-        }
-        .onboarding-step-text p {
-            color: #ccc;
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
+    /* ====== NUOVE CASINO BRAND CARDS ====== */
+    .casino-card{
+      background:var(--colore-card);border:1px solid #333;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;
+      transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;text-decoration:none;position:relative
+    }
+    .casino-card:hover{transform:translateY(-10px);border-color:var(--colore-oro);box-shadow:0 10px 30px rgba(0,0,0,.5),var(--ombra-neon-oro)}
+    .casino-cover{width:100%;height:200px;object-fit:cover;display:block;filter:brightness(1.05);transition:transform .4s ease,filter .4s ease}
+    .casino-card:hover .casino-cover{transform:scale(1.04)}
+    .casino-head{display:flex;align-items:center;gap:1rem;padding:1.25rem 1.5rem 0}
+    .casino-logo{width:56px;height:56px;border-radius:12px;background:#0e0e15;display:grid;place-items:center;border:1px solid #26262f;overflow:hidden}
+    .casino-logo img{width:100%;height:100%;object-fit:contain}
+    .casino-title{font-family:'Righteous',cursive;font-size:1.4rem;color:var(--colore-testo);line-height:1.1}
+    .casino-sub{font-size:.9rem;color:#bbb}
+    .casino-content{padding:1rem 1.5rem 1.5rem}
 
-        /* Barre di progresso */
-        .progress-bars {
-            display: flex;
-            gap: 5px;
-            width: 50%;
-            margin: 1.5rem auto 0 auto;
-            height: 4px;
-        }
-        .progress-bar {
-            flex-grow: 1;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        .progress-bar-inner {
-            width: 0;
-            height: 100%;
-            background-color: var(--colore-oro);
-            box-shadow: var(--ombra-neon-oro);
-            transition: width 6s linear; /* 6 secondi */
-        }
-        .progress-bar-inner.active {
-            width: 100%;
-        }
+    .rating-row{display:flex;align-items:center;gap:.5rem;margin:.3rem 0 .6rem}
+    .rating-value{font-weight:700}
+    .stars{display:inline-flex;gap:2px;vertical-align:middle}
+    .star{width:16px;height:16px;display:inline-block;
+      mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="m12 17.27 6.18 3.73-1.64-7.03L21 9.24l-7.19-.62L12 2 10.19 8.62 3 9.24l4.46 4.73L5.82 21z"/></svg>') no-repeat center/contain;
+      -webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="m12 17.27 6.18 3.73-1.64-7.03L21 9.24l-7.19-.62L12 2 10.19 8.62 3 9.24l4.46 4.73L5.82 21z"/></svg>') no-repeat center/contain;
+      background:#555}
+    .star.full{background:var(--colore-oro);box-shadow:0 0 8px rgba(255,215,0,.5)}
+    .star.half{background:linear-gradient(90deg,var(--colore-oro) 50%,#555 50%);box-shadow:0 0 8px rgba(255,215,0,.5)}
 
-        /* CTA Finale */
-        .modal-final-cta {
-            text-align: center;
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: modalFadeIn 0.6s 0.5s forwards;
-            padding-top: 2rem;
-            margin-top: 1.5rem;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
-        }
-        .modal-final-cta.active {
-            display: block;
-        }
-        /* Riusa lo stile .cta-button ma con colori diversi */
-        .cta-button-modal {
-            background: var(--colore-rosso-neon);
-            box-shadow: 0 4px 20px rgba(255, 51, 102, 0.4);
-        }
-        .cta-button-modal:hover {
-            background: #fff;
-            box-shadow: 0 6px 25px rgba(255, 51, 102, 0.6);
-        }
+    .badges{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1rem}
+    .badge{
+      font-size:.75rem;border:1px solid #2c2c35;background:#0f0f15;padding:.35rem .55rem;border-radius:999px;
+      display:inline-flex;align-items:center;gap:.4rem;color:#ddd
+    }
+    .dot{width:8px;height:8px;border-radius:50%}
+    .dot.green{background:var(--verde)}
+    .dot.red{background:var(--rosso)}
+    .dot.blue{background:var(--azzurro)}
+    .dot.gold{background:var(--colore-oro)}
 
-        /* EFFETTO "WARP SPEED" */
-        #transition-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #0a0a10;
-            z-index: 9998;
-            opacity: 0;
-            transform: scale(0);
-            border-radius: 50%;
-            display: none;
-            pointer-events: none;
-        }
-        #transition-overlay.warp {
-            display: block;
-            animation: warpSpeed 1s ease-in forwards;
-        }
-        @keyframes warpSpeed {
-            0% { transform: scale(0); opacity: 0.5; border-radius: 50%; }
-            100% { transform: scale(2); opacity: 1; border-radius: 0; }
-        }
+    .pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.75rem}
+    .list{
+      background:#0e0e15;border:1px solid #26262f;border-radius:12px;padding:.9rem
+    }
+    .list h4{font-size:.95rem;margin-bottom:.5rem;color:#eaeaea}
+    .list ul{list-style:none;display:grid;gap:.35rem}
+    .list li{font-size:.9rem;color:#cfcfcf;display:flex;gap:.5rem}
+    .list li .ico{font-weight:700}
+    .list.pros .ico{color:var(--verde)}
+    .list.cons .ico{color:var(--rosso)}
 
-        /* Media Queries */
-        @media (max-width: 992px) {
-            .hero h1 { font-size: 3.5rem; }
-            .hero-dynamic-text { font-size: 1.3rem; }
-            .hero-content { padding: 2.5rem; }
-            .why-us-item, .why-us-item:nth-child(even) {
-                grid-template-columns: 1fr;
-                transform: translateY(40px);
-                text-align: center;
-            }
-            .why-us-item:nth-child(even) .why-us-text { order: 0; }
-            .why-us-icon svg { width: 60px; height: 60px; }
-            
-            .onboarding-step {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                text-align: center;
-                height: 100%;
-                overflow-y: auto;
-                padding-right: 10px;
-            }
-            .onboarding-step-image {
-                max-height: 200px;
-                width: auto;
-                max-width: 100%;
-                margin: 0 auto;
-            }
-            .modal-stepper-container { min-height: 450px; }
-            .modal-content { padding: 2.5rem; overflow-y: hidden; }
-            .modal-content h2 { font-size: 2rem; margin-bottom: 1.5rem; }
-            .onboarding-step-text h3 { font-size: 1.5rem; }
-            .onboarding-step-text p { font-size: 1rem; }
-        }
-        @media (max-width: 768px) {
-            .navbar { padding: 1rem 1.5rem; }
-            .logo { font-size: 1.5rem; }
-            .hero h1 { font-size: 2.8rem; }
-            .hero-dynamic-text { font-size: 1.1rem; height: 2.2rem; }
-            .hero-content { padding: 2rem 1.5rem; }
-            .cta-button { font-size: 1rem; padding: 0.8rem 2rem; }
-            .welcome-package { padding: 4rem 1.5rem; }
-            .welcome-package h2 { font-size: 2.2rem; }
-            .welcome-package > p { font-size: 1rem; }
-            .why-us { padding: 3rem 1.5rem; }
-            .why-us-text h3 { font-size: 1.8rem; }
-            .final-cta { padding: 4rem 1.5rem; }
-            .final-cta h2 { font-size: 2.2rem; }
-            .final-cta p { font-size: 1rem; }
-            
-            .modal-content { width: 95%; padding: 2.5rem 1.5rem; }
-            .modal-content h2 { font-size: 1.8rem; }
-            .onboarding-step-text h3 { font-size: 1.2rem; }
-            .onboarding-step-text p { font-size: 0.9rem; }
-            .progress-bars { width: 80%; }
-        }
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 2.2rem; }
-            .hero-dynamic-text { font-size: 1rem; }
-            .hero-content { padding: 2rem 1rem; }
-            .lang-switcher a { font-size: 0.8rem; margin: 0 2px; }
-            .bonus-card .card-content { padding: 2rem 1.5rem; }
-            .bonus-card h3 { font-size: 1.5rem; }
-            .modal-content { padding: 2.5rem 1rem; }
-            .onboarding-step-image { max-height: 150px; }
-        }
-    </style>
+    .trust{
+      margin-top:1rem;background:#0e0e15;border:1px solid #26262f;border-radius:10px;padding:.8rem
+    }
+    .trust-header{display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:#cfcfcf;margin-bottom:.5rem}
+    .bar{width:100%;height:8px;background:#1b1b25;border-radius:999px;overflow:hidden}
+    .bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#9f7aea,#ffd700);box-shadow:0 0 10px rgba(255,215,0,.4);transition:width .8s ease}
+
+    .terms{margin-top:.75rem;font-size:.8rem;color:#bbb}
+    .cta-wrap{display:flex;gap:.6rem;margin-top:1rem;flex-wrap:wrap}
+    .btn{
+      text-decoration:none;padding:.75rem 1rem;border-radius:12px;border:1px solid #333;background:#1a1a24;color:#fff;font-weight:700;transition:.25s
+    }
+    .btn.primary{background:var(--colore-oro);color:#111;border-color:#8a7a00}
+    .btn.primary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+    .btn.secondary:hover{border-color:var(--colore-oro);box-shadow:0 0 12px rgba(255,215,0,.3)}
+
+    /* CTA finale */
+    .final-cta{
+      text-align:center;padding:6rem 2rem;
+      background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),url(https://image.pollinations.ai/prompt/luxury%20casino%20interior%2C%20roulette%20wheel%2C%20blurred%20background%2C%20bokeh%20lights%2C%20dark%20%2C%20high%20resolution) center/cover fixed
+    }
+    .final-cta h2{font-size:2.8rem;font-family:'Righteous',cursive;margin-bottom:1rem;color:var(--colore-testo)}
+    .final-cta p{font-size:1.2rem;margin-bottom:2rem;color:#f0f0f0}
+
+    .footer{text-align:center;padding:3rem 2rem;font-size:.9rem;color:#888}
+
+    /* Animazioni generiche */
+    .animate-on-scroll{transition:opacity .6s ease-out, transform .6s ease-out}
+    .is-visible{opacity:1!important;transform:none!important}
+
+    /* Responsive */
+    @media (max-width:992px){
+      .hero h1{font-size:3.5rem}
+      .hero-dynamic-text{font-size:1.3rem}
+      .hero-content{padding:2.5rem}
+      .why-us-item,.why-us-item:nth-child(even){grid-template-columns:1fr;transform:translateY(40px);text-align:center}
+      .why-us-item:nth-child(even) .why-us-text{order:0}
+      .why-us-icon{font-size:4rem;margin-bottom:1rem}
+      .why-us-icon svg{width:60px;height:60px}
+    }
+    @media (max-width:768px){
+      .navbar{padding:1rem 1.5rem}
+      .logo{font-size:1.5rem}
+      .hero h1{font-size:2.8rem}
+      .hero-dynamic-text{font-size:1.1rem;height:2.2rem}
+      .hero-content{padding:2rem 1.5rem}
+      .cta-button{font-size:1rem;padding:.8rem 2rem}
+      .welcome-package{padding:4rem 1.5rem}
+      .welcome-package h2{font-size:2.2rem}
+      .welcome-package>p{font-size:1rem}
+      .why-us{padding:3rem 1.5rem}
+      .why-us-text h3{font-size:1.8rem}
+      .final-cta{padding:4rem 1.5rem}
+      .final-cta h2{font-size:2.2rem}
+      .final-cta p{font-size:1rem}
+      .pros-cons{grid-template-columns:1fr}
+    }
+    @media (max-width:480px){
+      .hero h1{font-size:2.2rem}
+      .hero-dynamic-text{font-size:1rem}
+      .hero-content{padding:2rem 1rem}
+      .lang-switcher a{font-size:.8rem;margin:0 2px}
+    }
+  </style>
 </head>
 <body>
-
-    <nav class="navbar">
-        <a href="#" class="logo">THE CLUB</a>
-        <div class="lang-switcher">
-            <a href="#" class="lang-link active" data-lang="it">IT</a>
-            <span>|</span>
-            <a href="#" class="lang-link" data-lang="en">EN</a>
-            <span>|</span>
-            <a href="#" class="lang-link" data-lang="es">ES</a>
-        </div>
-    </nav>
-    
-    <header class="hero">
-        <div class="hero-content">
-            <h1 data-lang-key="heroTitle">BENVENUTO AL CLUB</h1>
-            <p class="hero-dynamic-text">
-                <span id="typed-text"></span><span class="cursor"></span>
-            </p>
-            <a href="#offerte" class="cta-button" data-lang-key="heroButton">Scopri le Offerte</a>
-        </div>
-    </header>
-
-    <main>
-    
-        <section class="why-us">
-            
-            <article class="why-us-item animate-on-scroll">
-                <div class="why-us-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--colore-oro)"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M13 12a1 1 0 1 0-2 0 1 1 0 0 0 2 0zM9 12a1 1 0 1 0-2 0 1 1 0 0 0 2 0zM17 12a1 1 0 1 0-2 0 1 1 0 0 0 2 0z"></path></svg>
-                </div>
-                <div class="why-us-text">
-                    <h3 data-lang-key="why1Title">Giochi Infiniti</h3>
-                    <p data-lang-key="why1Desc">Oltre 3.000 slot, tavoli di Blackjack, Roulette e Baccarat. Collaboriamo con i migliori provider del mondo per offrirti solo il meglio, con nuove uscite ogni settimana.</p>
-                </div>
-            </article>
-            
-            <article class="why-us-item animate-on-scroll">
-                <div class="why-us-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--colore-oro)"><path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm0 3c-3.86 0-7 3.14-7 7v1h14v-1c0-3.86-3.14-7-7-7z"></path></svg>
-                </div>
-                <div class="why-us-text">
-                    <h3 data-lang-key="why2Title">Esperienza Live 4K</h3>
-                    <p data-lang-key="why2Desc">Siediti ai nostri tavoli Live esclusivi. Dealer professionisti, streaming in 4K e un'atmosfera da vero casinò di lusso, disponibile 24/7 sul tuo dispositivo.</p>
-                </div>
-            </article>
-            
-            <article class="why-us-item animate-on-scroll">
-                <div class="why-us-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--colore-oro)"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="m12.446 15.34-3.513-3.513a.75.75 0 1 1 1.061-1.061l2.452 2.452 4.411-4.411a.75.75 0 1 1 1.06 1.061l-5.471 5.472z"></path></svg>
-                </div>
-                <div class="why-us-text">
-                    <h3 data-lang-key="why3Title">Pagamenti Rapidi e Sicuri</h3>
-                    <p data-lang-key="why3Desc">La tua sicurezza è la nostra priorità. Utilizziamo crittografia avanzata e garantiamo prelievi ultra-rapidi. Incassa le tue vincite in pochi minuti, non giorni.</p>
-                </div>
-            </article>
-            
-        </section>
-
-        <section class="welcome-package" id="offerte">
-            <h2 data-lang-key="bonusTitle" class="animate-on-scroll">Le Nostre Offerte Esclusive</h2>
-            <p data-lang-key="bonusSubtitle" class="animate-on-scroll">Dopo aver visto cosa offriamo, ecco i bonus speciali per iniziare. Attivali subito!</p>
-            
-            <div class="bonus-grid">
-                
-                <a class="bonus-card animate-on-scroll" 
-                   data-link="https://www.zipzap365.com/ZG1NKDS/4C7HHBK/"
-                   data-title="Grand Win">
-                    <img src="https://images.unsplash.com/photo-1598036882318-91a3c0de9f49?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzNjAzNTV8MHwxfGFsbHx8fHx8fHx8fDE3MzAzOTkwNTV8&ixlib=rb-4.0.3&q=85&w=800" alt="Grand Win Casino Offer">
-                    <div class="card-content">
-                        <h3 data-lang-key="offer1Title">Grand Win</h3>
-                        <p data-lang-key="offer1Desc">Un bonus di benvenuto dorato ti aspetta. Inizia la tua avventura con un vantaggio enorme. Clicca per i dettagli.</p>
-                        <p class="offer-comment" data-lang-key="offerComment">Partner Verificato: Grand Win</p>
-                    </div>
-                </a>
-
-                <a class="bonus-card animate-on-scroll" style="transition-delay: 0.1s;"
-                   data-link="https://www.zipzap365.com/ZG1NKDS/4C8WD36/"
-                   data-title="Silver Play">
-                    <img src="https://images.unsplash.com/photo-1542628634-c4f4d2d3e0f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNjAzNTV8MHwxfGFsbHx8fHx8fHx8fDE3MzAzODE4ODl8&ixlib=rb-4.0.3&q=80&w=800" alt="Silver Play Casino Offer">
-                    <div class="card-content">
-                        <h3 data-lang-key="offer2Title">Silver Play</h3>
-                        <p data-lang-key="offer2Desc">Eleganza e velocità. Prova l'esperienza di gioco più fluida con un pacchetto speciale per i nuovi giocatori.</p>
-                        <p class="offer-comment" data-lang-key="offerComment">Partner Verificato: Silver Play</p>
-                    </div>
-                </a>
-                
-                <a class="bonus-card animate-on-scroll" style="transition-delay: 0.2s;"
-                   data-link="https://www.zipzap365.com/ZG1NKDS/4C4PPTC/"
-                   data-title="Viking Luck">
-                    <img src="https://images.unsplash.com/photo-1604164392592-3b107853d9c2?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzNjAzNTV8MHwxfGFsbHx8fHx8fHx8fDE3MzAzOTkwNTV8&ixlib=rb-4.0.3&q=85&w=800" alt="Viking Luck Casino Offer">
-                    <div class="card-content">
-                        <h3 data-lang-key="offer3Title">Viking Luck</h3>
-                        <p data-lang-key="offer3Desc">Parti per un raid! Unisciti ai vichinghi e conquista tesori con un bonus di giri gratuiti sulle migliori slot a tema.</p>
-                        <p class="offer-comment" data-lang-key="offerComment">Partner Verificato: Viking Luck</p>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-        <section class="final-cta">
-            <h2 data-lang-key="ctaTitle">Il tuo tavolo è pronto.</h2>
-            <p data-lang-key="ctaSubtitle">Non aspettare, unisciti al divertimento. Le offerte sono a tempo limitato!</p>
-            <a href="#offerte" class="cta-button" data-lang-key="ctaButton">Vedi le Offerte</a>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <p data-lang-key="footerWarning">Il gioco è riservato ai maggiori di 18 anni e può causare dipendenza patologica.</p>
-        <p data-lang-key="footerRights">&copy; 2025 The Club. Tutti i diritti riservati.</p>
-    </footer>
-
-    <div id="explanation-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="close-modal">&times;</button>
-            <h2 id="modal-title-dynamic" data-lang-key="modalTitle">BENVENUTO NELL'OFFERTA</h2>
-            
-            <div class="modal-stepper-container">
-                
-                <div class="onboarding-step active" data-step="0">
-                    <img src="https://images.unsplash.com/photo-1617802690992-06d34ee973c5?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzNjAzNTV8MHwxfGFsbHx8fHx8fHx8fDE3MzAzOTkxNzh8&ixlib=rb-4.0.3&q=85&w=600" alt="Registrazione Veloce" class="onboarding-step-image">
-                    <div class="onboarding-step-text">
-                        <h3 data-lang-key="modalStep1Title">Registrati in Pochi Secondi</h3>
-                        <p data-lang-key="modalStep1Desc">Il primo passo è il più semplice. Clicca sul bottone alla fine di questa guida per accedere al portale. La registrazione è sicura, crittografata e richiede meno di 60 secondi.</p>
-                    </div>
-                </div>
-                
-                <div class="onboarding-step" data-step="1">
-                    <img src="https://images.unsplash.com/photo-1642052501043-3e7d56a73887?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzNjAzNTV8MHwxfGFsbHx8fHx8fHx8fDE3MzAzOTkxNzh8&ixlib=rb-4.0.3&q=85&w=600" alt="Deposita Fondi" class="onboarding-step-image">
-                    <div class="onboarding-step-text">
-                        <h3 data-lang-key="modalStep2Title">Attiva il Tuo Bonus</h3>
-                        <p data-lang-key="modalStep2Desc">Effettua il tuo primo deposito per sbloccare il bonus di benvenuto esclusivo. Tutti i metodi di pagamento più comuni (Visa, Mastercard, Skrill) sono accettati e protetti.</p>
-                    </div>
-                </div>
-
-                <div class="onboarding-step" data-step="2">
-                    <img src="https://images.unsplash.com/photo-1581351123004-757df051db8e?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzNjAzNTV8MHwxfGFsbHx8fHx8fHx8fDE3MzAzOTkxNzh8&ixlib=rb-4.0.3&q=85&w=600" alt="Gioca e Vinci" class="onboarding-step-image">
-                    <div class="onboarding-step-text">
-                        <h3 data-lang-key="modalStep3Title">Gioca e Vinci!</h3>
-                        <p data-lang-key="modalStep3Desc">Con il bonus accreditato, sei pronto. Esplora migliaia di slot, tavoli live e jackpot. Il tuo prossimo grande colpo è a un solo giro di distanza. Buona fortuna!</p>
-                    </div>
-                </div>
-
-            </div>
-            
-            <div class="progress-bars" id="progress-bars">
-                <div class="progress-bar"><div class="progress-bar-inner"></div></div>
-                <div class="progress-bar"><div class="progress-bar-inner"></div></div>
-                <div class="progress-bar"><div class="progress-bar-inner"></div></div>
-            </div>
-            
-            <div class="modal-final-cta" id="modal-final-cta">
-                <a href="#" target="_blank" class="cta-button cta-button-modal" id="final-cta-link">
-                    VAI ALL'OFFERTA <i class="fas fa-rocket"></i>
-                </a>
-            </div>
-        </div>
+  <nav class="navbar">
+    <a href="#" class="logo">THE CLUB</a>
+    <div class="lang-switcher">
+      <a href="#" class="lang-link active" data-lang="it">IT</a><span>|</span>
+      <a href="#" class="lang-link" data-lang="en">EN</a><span>|</span>
+      <a href="#" class="lang-link" data-lang="es">ES</a>
     </div>
-    
-    <div id="transition-overlay"></div>
+  </nav>
 
+  <header class="hero">
+    <div class="hero-content">
+      <h1 data-lang-key="heroTitle">BENVENUTO AL CLUB</h1>
+      <p class="hero-dynamic-text"><span id="typed-text"></span><span class="cursor"></span></p>
+      <a href="#offerte" class="cta-button" data-lang-key="heroButton">Scopri le Offerte</a>
+    </div>
+  </header>
 
-    <script>
-        // Questo è JavaScript puro, ma è scritto in modo strutturato
-        // come faresti con TypeScript. È pronto per il browser.
-        (function() {
-            
-            // --- 1. DATI PER TRADUZIONE ---
-            const translations = {
-                'it': {
-                    pageTitle: "Le Offerte del Club",
-                    heroTitle: "BENVENUTO AL CLUB",
-                    heroButton: "Scopri le Offerte",
-                    typedText1: "Le migliori offerte ti aspettano.",
-                    typedText2: "Vivi l'emozione del gioco.",
-                    typedText3: "Inizia a giocare ora.",
-                    bonusTitle: "Le Nostre Offerte Esclusive",
-                    bonusSubtitle: "Dopo aver visto cosa offriamo, ecco i bonus speciali per iniziare. Attivali subito!",
-                    // Card Offers
-                    offer1Title: "Grand Win",
-                    offer1Desc: "Un bonus di benvenuto dorato ti aspetta. Inizia la tua avventura con un vantaggio enorme. Clicca per i dettagli.",
-                    offer2Title: "Silver Play",
-                    offer2Desc: "Eleganza e velocità. Prova l'esperienza di gioco più fluida con un pacchetto speciale per i nuovi giocatori.",
-                    offer3Title: "Viking Luck",
-                    offer3Desc: "Parti per un raid! Unisciti ai vichinghi e conquista tesori con un bonus di giri gratuiti sulle migliori slot a tema.",
-                    offerComment: "Partner Verificato", // Generico
-                    // Why Us
-                    why1Title: "Giochi Infiniti",
-                    why1Desc: "Oltre 3.000 slot, tavoli di Blackjack, Roulette e Baccarat. Collaboriamo con i migliori provider del mondo per offrirti solo il meglio, con nuove uscite ogni settimana.",
-                    why2Title: "Esperienza Live 4K",
-                    why2Desc: "Siediti ai nostri tavoli Live esclusivi. Dealer professionisti, streaming in 4K e un'atmosfera da vero casinò di lusso, disponibile 24/7 sul tuo dispositivo.",
-                    why3Title: "Pagamenti Rapidi e Sicuri",
-                    why3Desc: "La tua sicurezza è la nostra priorità. Utilizziamo crittografia avanzata e garantiamo prelievi ultra-rapidi. Incassa le tue vincite in pochi minuti, non giorni.",
-                    // CTA Finale
-                    ctaTitle: "Il tuo tavolo è pronto.",
-                    ctaSubtitle: "Non aspettare, unisciti al divertimento. Le offerte sono a tempo limitato!",
-                    ctaButton: "Vedi le Offerte",
-                    // Modal
-                    modalTitle: "BENVENUTO NELL'OFFERTA",
-                    modalStep1Title: "Registrati in Pochi Secondi",
-                    modalStep1Desc: "Il primo passo è il più semplice. Clicca sul bottone alla fine di questa guida per accedere al portale. La registrazione è sicura, crittografata e richiede meno di 60 secondi.",
-                    modalStep2Title: "Attiva il Tuo Bonus",
-                    modalStep2Desc: "Effettua il tuo primo deposito per sbloccare il bonus di benvenuto esclusivo. Tutti i metodi di pagamento più comuni (Visa, Mastercard, Skrill) sono accettati e protetti.",
-                    modalStep3Title: "Gioca e Vinci!",
-                    modalStep3Desc: "Con il bonus accreditato, sei pronto. Esplora migliaia di slot, tavoli live e jackpot. Il tuo prossimo grande colpo è a un solo giro di distanza. Buona fortuna!",
-                    // Footer
-                    footerWarning: "Il gioco è riservato ai maggiori di 18 anni e può causare dipendenza patologica.",
-                    footerRights: "© 2025 The Club. Tutti i diritti riservati."
-                },
-                'en': {
-                    pageTitle: "The Club's Offers",
-                    heroTitle: "WELCOME TO THE CLUB",
-                    heroButton: "Discover the Offers",
-                    typedText1: "The best offers await you.",
-                    typedText2: "Experience the thrill of the game.",
-                    typedText3: "Start playing now.",
-                    bonusTitle: "Our Exclusive Offers",
-                    bonusSubtitle: "After seeing what we offer, here are the special bonuses to get you started. Activate them now!",
-                    offer1Title: "Grand Win",
-                    offer1Desc: "A golden welcome bonus awaits you. Start your adventure with a huge advantage. Click for details.",
-                    offer2Title: "Silver Play",
-                    offer2Desc: "Elegance and speed. Try the smoothest gaming experience with a special package for new players.",
-                    offer3Title: "Viking Luck",
-                    offer3Desc: "Go on a raid! Join the Vikings and conquer treasures with a free spins bonus on the best themed slots.",
-                    offerComment: "Verified Partner",
-                    why1Title: "Infinite Games",
-                    why1Desc: "Over 3,000 slots, Blackjack, Roulette, and Baccarat tables. We partner with the world's best providers to bring you only the best, with new releases every week.",
-                    why2Title: "4K Live Experience",
-                    why2Desc: "Take a seat at our exclusive Live tables. Professional dealers, 4K streaming, and a real luxury casino atmosphere, available 24/7 on your device.",
-                    why3Title: "Fast & Secure Payouts",
-                    why3Desc: "Your security is our priority. We use advanced encryption and guarantee ultra-fast withdrawals. Cash out your winnings in minutes, not days.",
-                    ctaTitle: "Your table is ready.",
-                    ctaSubtitle: "Don't wait, join the fun. The offers are for a limited time!",
-                    ctaButton: "See the Offers",
-                    modalTitle: "WELCOME TO THE OFFER",
-                    modalStep1Title: "Register in Seconds",
-                    modalStep1Desc: "The first step is the easiest. Click the button at the end of this guide to access the portal. Registration is secure, encrypted, and takes less than 60 seconds.",
-                    modalStep2Title: "Activate Your Bonus",
-                    modalStep2Desc: "Make your first deposit to unlock the exclusive welcome bonus. All common payment methods (Visa, Mastercard, Skrill) are accepted and protected.",
-                    modalStep3Title: "Play and Win!",
-                    modalStep3Desc: "With the bonus credited, you're all set. Explore thousands of slots, live tables, and jackpots. Your next big win is just one spin away. Good luck!",
-                    footerWarning: "Gambling is reserved for adults over 18 and can cause pathological addiction.",
-                    footerRights: "© 2025 The Club. All rights reserved."
-                },
-                'es': {
-                    // Aggiungi traduzioni ES qui
-                }
-            };
+  <main>
+    <!-- Perché noi -->
+    <section class="why-us">
+      <article class="why-us-item animate-on-scroll">
+        <div class="why-us-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M13 12a1 1 0 1 0-2 0 1 1 0 0 0 2 0zM9 12a1 1 0 1 0-2 0 1 1 0 0 0 2 0zM17 12a1 1 0 1 0-2 0 1 1 0 0 0 2 0z"></path></svg>
+        </div>
+        <div class="why-us-text">
+          <h3 data-lang-key="why1Title">Giochi Infiniti</h3>
+          <p data-lang-key="why1Desc">Oltre 3.000 slot, tavoli di Blackjack, Roulette e Baccarat. Collaboriamo con i migliori provider del mondo per offrirti solo il meglio, con nuove uscite ogni settimana.</p>
+        </div>
+      </article>
 
-            // --- 2. GESTORE LINGUA ---
-            class LanguageManager {
-                constructor(translations) {
-                    this.translations = translations;
-                    this.currentLang = 'it';
-                    this.langLinks = document.querySelectorAll('.lang-switcher .lang-link');
-                }
-                init(defaultLang) {
-                    this.langLinks.forEach(link => {
-                        link.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            this.setLanguage(e.target.dataset.lang || 'it');
-                        });
-                    });
-                    this.setLanguage(defaultLang);
-                }
-                setLanguage(lang) {
-                    if (!this.translations[lang]) lang = 'it';
-                    this.currentLang = lang;
-                    const langData = this.translations[lang];
-                    
-                    document.querySelectorAll('[data-lang-key]').forEach(element => {
-                        const key = element.dataset.langKey;
-                        if (key && langData[key]) {
-                            element.innerHTML = langData[key];
-                        }
-                    });
-                    
-                    document.documentElement.lang = lang;
-                    this.langLinks.forEach(link => {
-                        link.classList.toggle('active', link.dataset.lang === lang);
-                    });
-                    
-                    // Aggiorna il typewriter
-                    if (window.typewriter) {
-                        window.typewriter.updateLanguage(lang);
-                    }
-                }
-            }
+      <article class="why-us-item animate-on-scroll">
+        <div class="why-us-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3 3 3 0 0 1-3 3zm0 3c-3.86 0-7 3.14-7 7v1h14v-1c0-3.86-3.14-7-7-7z"></path></svg>
+        </div>
+        <div class="why-us-text">
+          <h3 data-lang-key="why2Title">Esperienza Live 4K</h3>
+          <p data-lang-key="why2Desc">Siediti ai nostri tavoli Live esclusivi. Dealer professionisti, streaming in 4K e un'atmosfera da vero casinò di lusso, disponibile 24/7 sul tuo dispositivo.</p>
+        </div>
+      </article>
 
-            // --- 3. CLASSE TYPEWRITER ---
-            class Typewriter {
-                constructor(element, cursor) {
-                    this.element = element;
-                    this.cursor = cursor;
-                    this.currentLang = 'it';
-                    this.textArray = [];
-                    this.typeIndex = 0;
-                    this.charIndex = 0;
-                    this.isDeleting = false;
-                    this.typingSpeed = 100;
-                    this.deletingSpeed = 50;
-                    this.pauseDelay = 2000;
-                    this.timeoutId = null;
-                    this.updateTextArray();
-                }
-                updateTextArray() {
-                    this.textArray = [
-                        translations[this.currentLang].typedText1,
-                        translations[this.currentLang].typedText2,
-                        translations[this.currentLang].typedText3,
-                    ];
-                }
-                type = () => {
-                    if (this.timeoutId) clearTimeout(this.timeoutId);
-                    const currentText = this.textArray[this.typeIndex];
-                    let displayText = '';
-                    let speed = this.typingSpeed;
-                    if (this.isDeleting) {
-                        displayText = currentText.substring(0, this.charIndex - 1);
-                        this.charIndex--;
-                        speed = this.deletingSpeed;
-                    } else {
-                        displayText = currentText.substring(0, this.charIndex + 1);
-                        this.charIndex++;
-                    }
-                    this.element.textContent = displayText;
-                    if (!this.isDeleting && this.charIndex === currentText.length) {
-                        this.isDeleting = true;
-                        speed = this.pauseDelay;
-                    } else if (this.isDeleting && this.charIndex === 0) {
-                        this.isDeleting = false;
-                        this.typeIndex = (this.typeIndex + 1) % this.textArray.length;
-                        speed = 500;
-                    }
-                    this.timeoutId = window.setTimeout(this.type, speed);
-                }
-                updateLanguage(lang) {
-                    this.currentLang = lang;
-                    this.updateTextArray();
-                    this.typeIndex = 0;
-                    this.charIndex = 0;
-                    this.isDeleting = false;
-                    this.type();
-                }
-            }
+      <article class="why-us-item animate-on-scroll">
+        <div class="why-us-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="m12.446 15.34-3.513-3.513a.75.75 0 1 1 1.061-1.061l2.452 2.452 4.411-4.411a.75.75 0 1 1 1.06 1.061l-5.471 5.472z"></path></svg>
+        </div>
+        <div class="why-us-text">
+          <h3 data-lang-key="why3Title">Pagamenti Rapidi e Sicuri</h3>
+          <p data-lang-key="why3Desc">La tua sicurezza è la nostra priorità. Utilizziamo crittografia avanzata e garantiamo prelievi ultra-rapidi. Incassa le tue vincite in pochi minuti, non giorni.</p>
+        </div>
+      </article>
+    </section>
 
-            // --- 4. GESTORE ANIMAZIONE SCROLL (Pagina Principale) ---
-            class ScrollAnimator {
-                constructor(selector) {
-                    this.elements = document.querySelectorAll(selector);
-                    this.observer = new IntersectionObserver(this.onIntersection.bind(this), {
-                        root: null,
-                        threshold: 0.1
-                    });
-                }
-                onIntersection(entries) {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-visible');
-                            this.observer.unobserve(entry.target);
-                        }
-                    });
-                }
-                init() {
-                    this.elements.forEach(el => this.observer.observe(el));
-                }
-            }
-            
-            // --- 5. GESTORE 3D TILT (Pagina Principale) ---
-            class HeroTilt {
-                constructor(heroSelector, contentSelector) {
-                    this.hero = document.querySelector(heroSelector);
-                    this.content = document.querySelector(contentSelector);
-                    this.maxTilt = 6;
-                }
-                init() {
-                    if (!this.hero || !this.content || !window.matchMedia('(pointer: fine)').matches) {
-                        return;
-                    }
-                    this.hero.addEventListener('mousemove', (e) => this.onMouseMove(e));
-                    this.hero.addEventListener('mouseleave', () => this.onMouseLeave());
-                    this.hero.addEventListener('mouseenter', () => this.onMouseEnter());
-                }
-                onMouseMove(e) {
-                    const { clientWidth, clientHeight } = this.hero;
-                    const { clientX, clientY } = e;
-                    const x = (clientX - clientWidth / 2) / (clientWidth / 2);
-                    const y = (clientY - clientHeight / 2) / (clientHeight / 2);
-                    const rotateY = x * this.maxTilt;
-                    const rotateX = -y * this.maxTilt;
-                    this.content.style.transform = \`rotateY(\${rotateY}deg) rotateX(\${rotateX}deg)\`;
-                }
-                onMouseLeave() {
-                    this.content.style.transform = 'rotateY(0deg) rotateX(0deg)';
-                    this.content.style.transition = 'transform 0.5s ease';
-                }
-                onMouseEnter() {
-                    this.content.style.transition = 'transform 0.1s linear';
-                }
-            }
+    <!-- Offerte -->
+    <section class="welcome-package" id="offerte">
+      <h2 data-lang-key="bonusTitle" class="animate-on-scroll">Le Nostre Offerte Esclusive</h2>
+      <p data-lang-key="bonusSubtitle" class="animate-on-scroll">Dopo aver visto cosa offriamo, ecco i bonus speciali per iniziare. Attivali subito!</p>
 
-            // --- 6. GESTORE ONBOARDING MODAL (Slideshow Automatico) ---
-            class ModalOnboarding {
-                constructor(modalId) {
-                    this.modal = document.getElementById(modalId);
-                    this.closeBtn = document.getElementById('close-modal');
-                    // Tutti i bottoni/card che aprono il modal
-                    this.openTriggers = document.querySelectorAll('.bonus-card, .final-cta .cta-button, .hero .cta-button');
-                    
-                    this.steps = this.modal.querySelectorAll('.onboarding-step');
-                    this.progressBars = this.modal.querySelectorAll('.progress-bar-inner');
-                    this.progressContainer = document.getElementById('progress-bars');
-                    this.finalCTA = document.getElementById('modal-final-cta');
-                    this.finalCtaLink = document.getElementById('final-cta-link');
-                    this.modalTitle = document.getElementById('modal-title-dynamic');
-                    this.transitionOverlay = document.getElementById('transition-overlay');
-                    
-                    this.currentStep = 0;
-                    this.totalSteps = this.steps.length;
-                    this.stepTimer = null;
-                    this.STEP_DURATION = 6000; // 6 secondi per slide
-                }
+      <div class="bonus-grid" id="casino-grid"><!-- render dinamico --></div>
+    </section>
 
-                init() {
-                    this.openTriggers.forEach(trigger => {
-                        trigger.addEventListener('click', (e) => {
-                            e.preventDefault(); // Previene il link dell'ancora
-                            
-                            // Logica per prendere i dati dalla card cliccata
-                            let link = "#"; // Link di default
-                            let title = "Bonus"; // Titolo di default
-                            
-                            const card = e.currentTarget.closest('.bonus-card');
-                            if (card) {
-                                link = card.dataset.link;
-                                title = card.dataset.title;
-                            } else if (e.currentTarget.closest('.final-cta')) {
-                                // Se clicca sul CTA finale, mandalo alla prima offerta
-                                const firstCard = document.querySelector('.bonus-card');
-                                link = firstCard.dataset.link;
-                                title = firstCard.dataset.title;
-                            } else if (e.currentTarget.closest('.hero')) {
-                                // Se clicca sul CTA dell'hero, mandalo alla prima offerta
-                                const firstCard = document.querySelector('.bonus-card');
-                                link = firstCard.dataset.link;
-                                title = firstCard.dataset.title;
-                            }
-                            
-                            this.openModal(link, title);
-                        });
-                    });
-                    
-                    this.closeBtn.addEventListener('click', () => this.closeModal());
-                    this.modal.addEventListener('click', (e) => {
-                        if (e.target === this.modal) this.closeModal();
-                    });
-                    
-                    this.finalCtaLink.addEventListener('click', (e) => this.playTransition(e));
-                }
+    <section class="final-cta">
+      <h2 data-lang-key="ctaTitle">Il tuo tavolo è pronto.</h2>
+      <p data-lang-key="ctaSubtitle">Non aspettare, unisciti al divertimento. Le offerte sono a tempo limitato!</p>
+      <a href="#offerte" class="cta-button" data-lang-key="ctaButton">Vedi le Offerte</a>
+    </section>
+  </main>
 
-                openModal(link, title) {
-                    // Imposta dinamicamente il link e il testo del bottone finale
-                    this.finalCtaLink.href = link;
-                    this.finalCtaLink.innerHTML = \`ATTIVA OFFERTA \${title.toUpperCase()} <i class="fas fa-rocket"></i>\`;
-                    this.modalTitle.innerHTML = \`BENVENUTO A \${title.toUpperCase()}\`;
-                    
-                    this.modal.style.display = 'flex';
-                    document.body.classList.add('modal-active');
-                    this.startSlideshow();
-                }
+  <footer class="footer">
+    <p data-lang-key="footerWarning">Il gioco è riservato ai maggiori di 18 anni e può causare dipendenza patologica.</p>
+    <p data-lang-key="footerRights">© 2025 The Club. Tutti i diritti riservati.</p>
+  </footer>
 
-                closeModal() {
-                    this.modal.style.display = 'none';
-                    document.body.classList.remove('modal-active');
-                    clearInterval(this.stepTimer);
-                    this.resetSlideshow();
-                }
+  <script>
+    (function(){
+      // ===== Multilingua (esteso con nuove chiavi) =====
+      const translations = {
+        it:{
+          pageTitle:"Le Offerte del Club",
+          heroTitle:"BENVENUTO AL CLUB",
+          heroButton:"Scopri le Offerte",
+          typedText1:"Le migliori offerte ti aspettano.",
+          typedText2:"Vivi l'emozione del gioco.",
+          typedText3:"Inizia a giocare ora.",
+          bonusTitle:"Le Nostre Offerte Esclusive",
+          bonusSubtitle:"Dopo aver visto cosa offriamo, ecco i bonus speciali per iniziare. Attivali subito!",
+          ctaTitle:"Il tuo tavolo è pronto.",
+          ctaSubtitle:"Non aspettare, unisciti al divertimento. Le offerte sono a tempo limitato!",
+          ctaButton:"Vedi le Offerte",
+          footerWarning:"Il gioco è riservato ai maggiori di 18 anni e può causare dipendenza patologica.",
+          footerRights:"© 2025 The Club. Tutti i diritti riservati.",
+          ratingLabel:"Valutazione",
+          trustLabel:"Affidabilità stimata",
+          licenza:"Licenza dichiarata",
+          kyc:"KYC",
+          payout:"Payout",
+          support:"Supporto",
+          pros:"Pro",
+          cons:"Contro",
+          viewOffer:"Attiva Offerta",
+          readMore:"Dettagli",
+          tcNote:"*Consulta T&C sul sito del partner. Gioca responsabilmente.",
+          yes:"Sì",
+          no:"No",
+          fast:"Veloce",
+          medium:"Normale",
+          slow:"Lento",
+          hours24:"H24",
+          notStated:"–",
+        },
+        en:{
+          pageTitle:"The Club's Offers",
+          heroTitle:"WELCOME TO THE CLUB",
+          heroButton:"Discover the Offers",
+          typedText1:"The best offers await you.",
+          typedText2:"Experience the thrill of the game.",
+          typedText3:"Start playing now.",
+          bonusTitle:"Our Exclusive Offers",
+          bonusSubtitle:"After seeing what we offer, here are special bonuses to get you started. Activate them now!",
+          ctaTitle:"Your table is ready.",
+          ctaSubtitle:"Don't wait, join the fun. Offers are for a limited time!",
+          ctaButton:"See the Offers",
+          footerWarning:"Gambling is 18+ and can be addictive.",
+          footerRights:"© 2025 The Club. All rights reserved.",
+          ratingLabel:"Rating",
+          trustLabel:"Estimated Trust",
+          licenza:"Declared license",
+          kyc:"KYC",
+          payout:"Payout",
+          support:"Support",
+          pros:"Pros",
+          cons:"Cons",
+          viewOffer:"Activate Offer",
+          readMore:"Details",
+          tcNote:"*Check T&Cs on partner site. Play responsibly.",
+          yes:"Yes", no:"No",
+          fast:"Fast", medium:"Standard", slow:"Slow",
+          hours24:"24/7", notStated:"–",
+        },
+        es:{
+          pageTitle:"Las Ofertas del Club",
+          heroTitle:"BIENVENIDO AL CLUB",
+          heroButton:"Descubre las Ofertas",
+          typedText1:"Las mejores ofertas te esperan.",
+          typedText2:"Vive la emoción del juego.",
+          typedText3:"Empieza a jugar ahora.",
+          bonusTitle:"Nuestras Ofertas Exclusivas",
+          bonusSubtitle:"Tras ver lo que ofrecemos, aquí tienes bonos especiales para empezar. ¡Actívalos ya!",
+          ctaTitle:"Tu mesa está lista.",
+          ctaSubtitle:"No esperes, únete a la diversión. ¡Ofertas por tiempo limitado!",
+          ctaButton:"Ver Ofertas",
+          footerWarning:"El juego es 18+ y puede causar adicción.",
+          footerRights:"© 2025 The Club. Todos los derechos reservados.",
+          ratingLabel:"Valoración",
+          trustLabel:"Fiabilidad estimada",
+          licenza:"Licencia declarada",
+          kyc:"KYC",
+          payout:"Pagos",
+          support:"Soporte",
+          pros:"Ventajas",
+          cons:"Desventajas",
+          viewOffer:"Activar Oferta",
+          readMore:"Detalles",
+          tcNote:"*Consulta T&C en el sitio del partner. Juega con responsabilidad.",
+          yes:"Sí", no:"No",
+          fast:"Rápido", medium:"Normal", slow:"Lento",
+          hours24:"24/7", notStated:"–",
+        }
+      };
 
-                resetSlideshow() {
-                    this.currentStep = 0;
-                    this.finalCTA.classList.remove('active');
-                    this.progressContainer.style.display = 'flex';
-                    this.progressBars.forEach(bar => {
-                        bar.style.transition = 'none';
-                        bar.classList.remove('active');
-                    });
-                    this.steps.forEach((step, index) => {
-                        step.classList.remove('active', 'exit-left');
-                        if (index === 0) step.classList.add('active');
-                    });
-                }
+      /* Typewriter */
+      class Typewriter{
+        constructor(el,cursor){this.element=el;this.cursor=cursor;this.currentLang='it';this.textArray=[];
+          this.typeIndex=0;this.charIndex=0;this.isDeleting=false;this.typingSpeed=100;this.deletingSpeed=50;this.pauseDelay=2000;this.timeoutId=null;this.updateTextArray()}
+        updateTextArray(){this.textArray=[translations[this.currentLang].typedText1,translations[this.currentLang].typedText2,translations[this.currentLang].typedText3]}
+        type=()=>{if(this.timeoutId)clearTimeout(this.timeoutId);
+          const t=this.textArray[this.typeIndex];let display='';let speed=this.typingSpeed;
+          if(this.isDeleting){display=t.substring(0,this.charIndex-1);this.charIndex--;speed=this.deletingSpeed}
+          else{display=t.substring(0,this.charIndex+1);this.charIndex++}
+          this.element.textContent=display;
+          if(!this.isDeleting&&this.charIndex===t.length){this.isDeleting=true;speed=this.pauseDelay}
+          else if(this.isDeleting&&this.charIndex===0){this.isDeleting=false;this.typeIndex=(this.typeIndex+1)%this.textArray.length;speed=500}
+          this.timeoutId=window.setTimeout(this.type,speed)
+        }
+        updateLanguage=(lang)=>{this.currentLang=lang;this.updateTextArray();this.typeIndex=0;this.charIndex=0;this.isDeleting=false;this.type()}
+      }
+      let typewriter;
 
-                startSlideshow() {
-                    this.resetSlideshow();
-                    this.showStep(0);
+      const setLanguage=(lang)=>{
+        const langData=translations[lang]||translations['it'];
+        document.querySelectorAll('[data-lang-key]').forEach(el=>{
+          const key=el.dataset.langKey;
+          if(key&&langData[key]){
+            if(el.tagName==='TITLE'){el.textContent=langData[key]}
+            else{el.innerText=langData[key]}
+          }
+        });
+        document.documentElement.lang=lang;
+        document.querySelectorAll('.lang-switcher .lang-link').forEach(l=>{
+          l.classList.remove('active');if(l.dataset.lang===lang){l.classList.add('active')}
+        });
+        if(typewriter){typewriter.updateLanguage(lang)}
+        // aggiorna testi dinamici nelle card
+        renderCasinos(lang);
+      };
 
-                    this.stepTimer = setInterval(() => {
-                        if (this.currentStep < this.totalSteps - 1) {
-                            this.showStep(this.currentStep + 1);
-                        } else {
-                            clearInterval(this.stepTimer);
-                            this.progressContainer.style.display = 'none';
-                            this.finalCTA.classList.add('active');
-                        }
-                    }, this.STEP_DURATION);
-                }
+      const setupScrollObserver=()=>{
+        const els=document.querySelectorAll('.animate-on-scroll');
+        const opt={root:null,rootMargin:'0px',threshold:0.1};
+        const cb=(entries,obs)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');obs.unobserve(e.target)}})};
+        const observer=new IntersectionObserver(cb,opt);
+        els.forEach(el=>observer.observe(el));
+      };
 
-                showStep(stepIndex) {
-                    this.steps.forEach((step, index) => {
-                        if (index === stepIndex) {
-                            step.classList.remove('exit-left');
-                            step.classList.add('active');
-                        } else if (index < stepIndex) {
-                            step.classList.add('exit-left');
-                            step.classList.remove('active');
-                        } else {
-                            step.classList.remove('active', 'exit-left');
-                        }
-                    });
+      const setupHeroTilt=()=>{
+        if(!window.matchMedia('(pointer: fine)').matches) return;
+        const hero=document.querySelector('.hero');const content=document.querySelector('.hero-content');if(!hero||!content) return;
+        const maxTilt=6;
+        hero.addEventListener('mousemove',e=>{
+          const {clientWidth,clientHeight}=hero;const {clientX,clientY}=e;
+          const x=(clientX-clientWidth/2)/(clientWidth/2);
+          const y=(clientY-clientHeight/2)/(clientHeight/2);
+          const rotateY=x*maxTilt;const rotateX=-y*maxTilt;
+          content.style.transform=`rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+        });
+        hero.addEventListener('mouseleave',()=>{content.style.transform='rotateY(0deg) rotateX(0deg)';content.style.transition='transform .5s ease'});
+        hero.addEventListener('mouseenter',()=>{content.style.transition='transform .1s linear'});
+      };
 
-                    this.progressBars.forEach((bar, index) => {
-                        bar.classList.remove('active');
-                        void bar.offsetWidth;
-                        
-                        if (index < stepIndex) {
-                            bar.style.transition = 'none';
-                            bar.classList.add('active');
-                        } else if (index === stepIndex) {
-                            bar.style.transition = \`width \${this.STEP_DURATION / 1000}s linear\`;
-                            bar.classList.add('active');
-                        }
-                    });
-                    
-                    this.currentStep = stepIndex;
-                }
-                
-                playTransition(e) {
-                    e.preventDefault();
-                    const url = e.currentTarget.href;
-                    this.transitionOverlay.classList.add('warp');
-                    setTimeout(() => {
-                        window.open(url, '_blank');
-                        this.closeModal();
-                        setTimeout(() => {
-                           this.transitionOverlay.classList.remove('warp'); 
-                        }, 500);
-                    }, 1000);
-                }
-            }
+      // ====== DATI OFFERTE (EDITABILI) ======
+      // Sostituisci logo/cover con file tuoi. Gli URL sono quelli affiliati forniti da te.
+      const casinos=[
+        {
+          id:'grandwin',
+          name:'Grand Win',
+          url:'https://www.zipzap365.com/ZG1NKDS/4C7HHBK/',
+          logo:'https://placehold.co/160x160/png?text=Grand+Win',
+          cover:'https://placehold.co/800x400/jpg?text=Grand+Win+Cover',
+          rating:4.5,                       // 0..5 (mezze stelle consentite)
+          trust:86,                         // barra affidabilità 0..100 (stima interna)
+          license:'Dichiarata: Curaçao',     // testo libero
+          kyc:true,
+          payout:'fast',                    // fast | medium | slow
+          support:'24/7',
+          pros:[
+            'Welcome competitivo',
+            'Lobby ampia (slot + live)',
+            'Promo ricorrenti'
+          ],
+          cons:[
+            'Alcune restrizioni per Paese',
+            'Documenti KYC richiesti'
+          ],
+          tcNote:'Bonus soggetto a requisiti di puntata. Verifica limiti e termini sul sito.'
+        },
+        {
+          id:'silverplay',
+          name:'Silver Play',
+          url:'https://www.zipzap365.com/ZG1NKDS/4C8WD36/',
+          logo:'https://placehold.co/160x160/png?text=Silver+Play',
+          cover:'https://placehold.co/800x400/jpg?text=Silver+Play+Cover',
+          rating:4.2,
+          trust:82,
+          license:'Dichiarata: Curaçao',
+          kyc:true,
+          payout:'medium',
+          support:'24/7',
+          pros:[
+            'Tornei slot frequenti',
+            'Cashback/missioni periodiche',
+            'App mobile responsive'
+          ],
+          cons:[
+            'Limiti prelievo variabili',
+            'Alcuni provider non in tutti i Paesi'
+          ],
+          tcNote:'Consulta T&C per rollover e giochi esclusi dai requisiti.'
+        },
+        {
+          id:'vikingluck',
+          name:'Viking Luck',
+          url:'https://www.zipzap365.com/ZG1NKDS/4C4PPTC/',
+          logo:'https://placehold.co/160x160/png?text=Viking+Luck',
+          cover:'https://placehold.co/800x400/jpg?text=Viking+Luck+Cover',
+          rating:4.0,
+          trust:78,
+          license:'Dichiarata: Curaçao',
+          kyc:true,
+          payout:'medium',
+          support:'Orari estesi',
+          pros:[
+            'Tema e UX originali',
+            'Programma VIP a livelli'
+          ],
+          cons:[
+            'Live chat non sempre h24',
+            'Alcune valute non supportate'
+          ],
+          tcNote:'Verifica termini su bonus e limiti di prelievo prima di aderire.'
+        }
+      ];
 
-            // --- 7. INIZIALIZZAZIONE ---
-            document.addEventListener('DOMContentLoaded', () => {
-                // Avvia traduzioni
-                const langManager = new LanguageManager(translations);
-                langManager.init('it');
-                
-                // Avvia animazioni scroll pagina
-                const scrollAnimator = new ScrollAnimator('.animate-on-scroll');
-                scrollAnimator.init();
-                
-                // Avvia effetto 3D hero
-                const heroTilt = new HeroTilt('.hero', '.hero-content');
-                heroTilt.init();
-                
-                // Inizializza logica modal
-                const modalOnboarding = new ModalOnboarding('explanation-modal');
-                modalOnboarding.init();
-                
-                // Avvia typewriter
-                const typedEl = document.getElementById('typed-text');
-                const cursorEl = document.querySelector('.cursor');
-                if (typedEl && cursorEl) {
-                    window.typewriter = new Typewriter(typedEl, cursorEl);
-                    window.typewriter.updateLanguage('it');
-                }
-            });
+      // ====== RENDER CARDS ======
+      function starHtml(r){
+        const full=Math.floor(r);
+        const half=(r-full)>=0.5?1:0;
+        const empty=5-full-half;
+        return `
+          <div class="stars" aria-hidden="true">
+            ${'<span class="star full"></span>'.repeat(full)}
+            ${half?'<span class="star half"></span>':''}
+            ${'<span class="star"></span>'.repeat(empty)}
+          </div>
+        `;
+      }
 
-        })();
-    </script>
+      function badge(label, colorClass){
+        return `<span class="badge"><span class="dot ${colorClass}"></span>${label}</span>`;
+      }
+
+      function payoutLabel(p, t){
+        if(p==='fast') return t.fast;
+        if(p==='slow') return t.slow;
+        return t.medium;
+      }
+
+      function renderCasinos(lang){
+        const t=translations[lang]||translations['it'];
+        const grid=document.getElementById('casino-grid');
+        if(!grid) return;
+        grid.innerHTML='';
+
+        casinos.forEach(c=>{
+          const card=document.createElement('article');
+          card.className='casino-card animate-on-scroll';
+          card.setAttribute('data-offer-id', c.id);
+
+          const trustWidth=Math.max(0, Math.min(100, c.trust));
+
+          card.innerHTML=`
+            <img class="casino-cover" src="${c.cover}" alt="Cover ${c.name}"/>
+            <div class="casino-head">
+              <div class="casino-logo">
+                <img src="${c.logo}" alt="Logo ${c.name}"/>
+              </div>
+              <div>
+                <div class="casino-title">${c.name}</div>
+                <div class="casino-sub">
+                  <strong>${t.ratingLabel}:</strong> <span class="rating-value">${c.rating.toFixed(1)}/5</span>
+                  ${starHtml(c.rating)}
+                </div>
+              </div>
+            </div>
+
+            <div class="casino-content">
+              <div class="badges">
+                ${badge(`${t.licenza}: ${c.license || t.notStated}`,'gold')}
+                ${badge(`${t.kyc}: ${c.kyc?t.yes:t.no}`, c.kyc?'green':'red')}
+                ${badge(`${t.payout}: ${payoutLabel(c.payout,t)}`, c.payout==='fast'?'green':(c.payout==='slow'?'red':'blue'))}
+                ${badge(`${t.support}: ${c.support||t.notStated}`,'blue')}
+              </div>
+
+              <div class="pros-cons">
+                <div class="list pros">
+                  <h4>${t.pros}</h4>
+                  <ul>
+                    ${c.pros.map(p=>`<li><span class="ico">+</span><span>${p}</span></li>`).join('')}
+                  </ul>
+                </div>
+                <div class="list cons">
+                  <h4>${t.cons}</h4>
+                  <ul>
+                    ${c.cons.map(p=>`<li><span class="ico">–</span><span>${p}</span></li>`).join('')}
+                  </ul>
+                </div>
+              </div>
+
+              <div class="trust" aria-label="${t.trustLabel}">
+                <div class="trust-header">
+                  <span>${t.trustLabel}</span>
+                  <strong>${trustWidth}%</strong>
+                </div>
+                <div class="bar"><span style="width:${trustWidth}%"></span></div>
+              </div>
+
+              <p class="terms">${c.tcNote || t.tcNote}</p>
+
+              <div class="cta-wrap">
+                <a class="btn primary" href="${c.url}" target="_blank" rel="nofollow noopener" data-cta="open">${t.viewOffer}</a>
+                <a class="btn secondary" href="${c.url}" target="_blank" rel="nofollow noopener">${t.readMore}</a>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        // riattiva osservatore animazioni per le nuove card
+        setupScrollObserver();
+      }
+
+      // ====== JSON-LD (facoltativo ma utile per SEO delle rating) ======
+      function injectJsonLd(){
+        const data = casinos.map(c => ({
+          "@context":"https://schema.org",
+          "@type":"Product",
+          "name": c.name,
+          "image": [c.logo, c.cover].filter(Boolean),
+          "brand": c.name,
+          "url": c.url,
+          "aggregateRating":{
+            "@type":"AggregateRating",
+            "ratingValue": c.rating,
+            "bestRating":"5",
+            "worstRating":"0",
+            "ratingCount": Math.round(50 + c.trust) // fittizio; puoi collegarlo a dati reali
+          }
+        }));
+        const script=document.createElement('script');
+        script.type='application/ld+json';
+        script.textContent=JSON.stringify(data);
+        document.head.appendChild(script);
+      }
+
+      // ====== Init ======
+      document.addEventListener('DOMContentLoaded',()=>{
+        setupHeroTilt();
+        setupScrollObserver();
+
+        const typedEl=document.getElementById('typed-text');
+        const cursorEl=document.querySelector('.cursor');
+        if(typedEl && cursorEl){ typewriter=new Typewriter(typedEl,cursorEl); }
+
+        document.querySelectorAll('.lang-switcher .lang-link').forEach(link=>{
+          link.addEventListener('click',(e)=>{
+            e.preventDefault();
+            const lang=e.currentTarget.dataset.lang;
+            if(lang){ setLanguage(lang); }
+          });
+        });
+
+        // lingua default + render
+        setLanguage('it');
+        injectJsonLd();
+      });
+    })();
+  </script>
 </body>
 </html>
